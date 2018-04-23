@@ -1,0 +1,24 @@
+{
+  "conexoes":
+  {
+    "P1": ["I1"],
+    "P2": ["I3"],
+    "I1": ["P1", "I2"],
+    "I2": ["I1", "I3", "A1", "A2"],
+    "I3": ["P2", "I2", "A3"],
+    "A1": ["I2"],
+    "A2": ["I2"],
+    "A3": ["I3"]
+  },
+  "hosts":
+  {
+    "P1": "localhost:9101",
+    "P2": "localhost:9102",
+    "I1": "localhost:9103",
+    "I2": "localhost:9104",
+    "I3": "localhost:9105",
+    "A1": "localhost:9106",
+    "A2": "localhost:9107",
+    "A3": "localhost:9108"
+  }
+}

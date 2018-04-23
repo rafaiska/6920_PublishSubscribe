@@ -1,6 +1,8 @@
 import sys
 import getopt
 
+from node import Node
+
 def print_help():
     help_str = ''
     help_str += '======================================\n'
@@ -48,6 +50,11 @@ def main():
         print('O processo pode ser OU assinante OU publicador, nunca ambos. Entre com a opcao "--help" para mais '
               'informacoes')
         sys.exit(2)
+
+    node = Node(process_name)
+    print(node)
+    while True:
+        pass
 
 if __name__ == '__main__':
     main()
