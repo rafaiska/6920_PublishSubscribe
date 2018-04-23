@@ -1,19 +1,30 @@
 import gevent
+import json
 from gevent.server import StreamServer
 from gevent.event import Event
 from gevent import socket
+from table import STable
 
 class PSComm(object):
     def __init__(self, hostname, port):
         self.hostname = hostname
         self.port = port
         self.server_greenlet = None
+        self.subs_table = STable()
         self.new_req = Event()
 
     def req_handler(self, sock, clientaddress):
-        print('{}, {}'.format(sock, type(sock)))
-        print('{}, {}'.format(clientaddress, type(clientaddress)))
-        print(sock.recv(1024))
+        msg = sock.recv(1024)
+        try:
+            msg = json.loads(msg)
+        except ValueError:
+            msg = {}
+
+        if 'subscription' in msg:
+            subs = msg['subscription']
+            self.subs_table.update_table(
+                subs['item'], subs['subscriber'], subs['next_node'],
+                subs['hops'])
 
     def start_server(self):
         print('Ouvindo requisicoes em {}:{}'.format(self.hostname, self.port))
