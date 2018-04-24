@@ -21,7 +21,20 @@ def print_help():
     help_str += '$python main.py [--help]'
     print(help_str)
 
+def print_subs_table(table):
+    print table
+
+
 def main():
+    def subscribe():
+        item_name = raw_input('Para qual item deseja inscrever esse node?\n>')
+        node.subscribe(item_name)
+
+    def publish():
+        item_name = raw_input('Qual o identificador dessa publicacao?\n>')
+        content = raw_input('Qual o conteudo da publicacao?\n>')
+        node.publish(item_name, content)
+
     process_name = 'ALPHA'
     try:
         option_list, args = getopt.getopt(sys.argv[1:], 'ps', 'help')
@@ -51,10 +64,30 @@ def main():
               'informacoes')
         sys.exit(2)
 
+    print('Inicializando no do sistema...')
     node = Node(process_name)
+    print('Pronto')
     print(node)
+    opcoes = {
+        '1': lambda: print_subs_table(node.comm.subs_table),
+        '2': node.print_publications,
+        '3': publish,
+        '4': subscribe,
+        '5': lambda: sys.exit(0)
+    }
     while True:
-        pass
+        print('\nSelecione uma opcao:')
+        print('\t1) Verificar tabela de assinaturas (rotas)')
+        print('\t2) Mostrar lista de publicacoes recebidas')
+        print('\t3) Publicar')
+        print('\t4) Assinar')
+        print('\t5) Sair')
+
+        opcao = raw_input('>')
+        if opcao not in opcoes:
+            print('OPCAO INCORRETA! Tente novamente.')
+        else:
+            opcoes[opcao]()
 
 if __name__ == '__main__':
     main()
