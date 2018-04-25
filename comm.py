@@ -27,7 +27,6 @@ class PSComm(object):
             print('Recebido: {}'.format(msg))
             msg = {}
         sock.close()
-        print('RECEIVED {}'.format(msg))
 
         if 'from' not in msg:
             print('ERRO: MENSAGEM SEM IDENTIFICACAO')
